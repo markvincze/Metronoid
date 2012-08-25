@@ -23,4 +23,45 @@
       <Filter>Assets</Filter>
     </Image>
   </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="DirectXBase.cpp" />
+    <ClCompile Include="App.xaml.cpp" />
+    <ClCompile Include="DirectXPage.xaml.cpp" />
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include=".\MetronoidRenderer.cpp" />
+    <ClCompile Include="Game\GameObject.cpp" />
+    <ClCompile Include="Game\Paddle.cpp" />
+    <ClCompile Include="Game\Game.cpp" />
+    <ClCompile Include="Game\Ball.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="App.xaml.h" />
+    <ClInclude Include="DirectXPage.xaml.h" />
+    <ClInclude Include="BasicTimer.h" />
+    <ClInclude Include="DirectXHelper.h" />
+    <ClInclude Include="DirectXBase.h" />
+    <ClInclude Include=".\MetronoidRenderer.h" />
+    <ClInclude Include="Geometry\Point.h" />
+    <ClInclude Include="Geometry\Vector.h" />
+    <ClInclude Include="Game\GameObject.h" />
+    <ClInclude Include=".\Interfaces\IMetronoidRenderer.h" />
+    <ClInclude Include="Geometry\Rect.h" />
+    <ClInclude Include="Geometry\Size.h" />
+    <ClInclude Include="Game\Paddle.h" />
+    <ClInclude Include="Game\Game.h" />
+    <ClInclude Include="Game\Ball.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <AppxManifest Include="Package.appxmanifest" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Metronoid_TemporaryKey.pfx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="DirectXPage.xaml" />
+  </ItemGroup>
 </Project>

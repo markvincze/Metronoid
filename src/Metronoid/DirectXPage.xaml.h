@@ -6,8 +6,9 @@
 #pragma once
 
 #include "DirectXPage.g.h"
-#include "SimpleTextRenderer.h"
+#include "MetronoidRenderer.h"
 #include "BasicTimer.h"
+#include "Game\Game.h"
 
 namespace Metronoid
 {
@@ -33,7 +34,12 @@ namespace Metronoid
 
 		Windows::Foundation::EventRegistrationToken m_eventToken;
 
-		SimpleTextRenderer^ m_renderer;
+		float x;
+		float s;
+
+		game::Game^ game;
+
+		MetronoidRenderer^ m_renderer;
 		bool m_renderNeeded;
 
 		Windows::Foundation::Point m_lastPoint;

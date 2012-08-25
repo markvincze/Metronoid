@@ -1,0 +1,52 @@
+
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+# On branch master
+# Changes to be committed:
+#   (use "git reset HEAD <file>..." to unstage)
+#
+#	modified:   .gitignore
+#	new file:   src/Metronoid/App.xaml
+#	new file:   src/Metronoid/App.xaml.cpp
+#	new file:   src/Metronoid/App.xaml.h
+#	new file:   src/Metronoid/Assets/Logo.png
+#	new file:   src/Metronoid/Assets/SmallLogo.png
+#	new file:   src/Metronoid/Assets/SplashScreen.png
+#	new file:   src/Metronoid/Assets/StoreLogo.png
+#	new file:   src/Metronoid/BasicTimer.h
+#	new file:   src/Metronoid/Common/StandardStyles.xaml
+#	new file:   src/Metronoid/Debug/App.g.h
+#	new file:   src/Metronoid/Debug/App.g.hpp
+#	new file:   src/Metronoid/Debug/Common/StandardStyles.g.h
+#	new file:   src/Metronoid/Debug/Common/StandardStyles.g.hpp
+#	new file:   src/Metronoid/Debug/DirectXPage.g.h
+#	new file:   src/Metronoid/Debug/DirectXPage.g.hpp
+#	new file:   src/Metronoid/Debug/XamlLibMetadataProvider.g.cpp
+#	new file:   src/Metronoid/Debug/XamlTypeInfo.Impl.g.cpp
+#	new file:   src/Metronoid/Debug/XamlTypeInfo.g.h
+#	new file:   src/Metronoid/DirectXBase.cpp
+#	new file:   src/Metronoid/DirectXBase.h
+#	new file:   src/Metronoid/DirectXHelper.h
+#	new file:   src/Metronoid/DirectXPage.xaml
+#	new file:   src/Metronoid/DirectXPage.xaml.cpp
+#	new file:   src/Metronoid/DirectXPage.xaml.h
+#	new file:   src/Metronoid/Metronoid.sdf
+#	new file:   src/Metronoid/Metronoid.sln
+#	new file:   src/Metronoid/Metronoid.v11.suo
+#	new file:   src/Metronoid/Metronoid.vcxproj
+#	new file:   src/Metronoid/Metronoid.vcxproj.filters
+#	new file:   src/Metronoid/Metronoid_TemporaryKey.pfx
+#	new file:   src/Metronoid/Package.appxmanifest
+#	new file:   src/Metronoid/SimpleTextRenderer.cpp
+#	new file:   src/Metronoid/SimpleTextRenderer.h
+#	new file:   src/Metronoid/ipch/metronoid-b0aaaa8c/pch-990d9f07.ipch
+#	new file:   src/Metronoid/pch.cpp
+#	new file:   src/Metronoid/pch.h
+#
+# Changes not staged for commit:
+#   (use "git add <file>..." to update what will be committed)
+#   (use "git checkout -- <file>..." to discard changes in working directory)
+#
+#	modified:   .gitignore
+#
+

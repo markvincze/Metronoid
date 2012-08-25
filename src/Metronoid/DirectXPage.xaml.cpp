@@ -5,6 +5,7 @@
 
 #include "pch.h"
 #include "DirectXPage.xaml.h"
+#include "Geometry\Point.h"
 
 using namespace Metronoid;
 
@@ -24,11 +25,14 @@ using namespace Windows::Graphics::Display;
 
 DirectXPage::DirectXPage() :
 	m_renderNeeded(true),
-	m_lastPointValid(false)
+	m_lastPointValid(false),
+	game(ref new game::Game()),
+	x(0),
+	s(80)
 {
 	InitializeComponent();
 
-	m_renderer = ref new SimpleTextRenderer();
+	m_renderer = ref new MetronoidRenderer();
 
 	m_renderer->Initialize(
 		Window::Current->CoreWindow,
@@ -54,24 +58,24 @@ DirectXPage::~DirectXPage()
 void DirectXPage::OnPointerMoved(Platform::Object^ sender, Windows::UI::Xaml::Input::PointerRoutedEventArgs^ args)
 {
 	auto currentPoint = args->GetCurrentPoint(nullptr);
-	if (currentPoint->IsInContact)
-	{
-		if (m_lastPointValid)
+	/*if (currentPoint->IsInContact)
+	{*/
+		/*if (m_lastPointValid)
 		{
-			Windows::Foundation::Point delta(
-				currentPoint->Position.X - m_lastPoint.X,
-				currentPoint->Position.Y - m_lastPoint.Y
-				);
-			m_renderer->UpdateView(delta);
-			m_renderNeeded = true;
-		}
+		Windows::Foundation::Point delta(
+		currentPoint->Position.X - m_lastPoint.X,
+		currentPoint->Position.Y - m_lastPoint.Y
+		);
+		m_renderer->UpdateView(delta);
+		m_renderNeeded = true;
+		}*/
 		m_lastPoint = currentPoint->Position;
-		m_lastPointValid = true;
+	/*	m_lastPointValid = true;
 	}
 	else
 	{
 		m_lastPointValid = false;
-	}
+	}*/
 }
 
 void DirectXPage::OnPointerReleased(Platform::Object^ sender, Windows::UI::Xaml::Input::PointerRoutedEventArgs^ args)
@@ -93,14 +97,14 @@ void DirectXPage::OnLogicalDpiChanged(Platform::Object^ sender)
 
 void DirectXPage::OnRendering(Platform::Object^ sender, Platform::Object^ args)
 {
-	if (m_renderNeeded)
-	{
-		m_timer->Update();
-		m_renderer->Update(m_timer->Total, m_timer->Delta);
-		m_renderer->Render();
-		m_renderer->Present();
-		m_renderNeeded = false;
-	}
+	m_timer->Update();
+
+	game->Step(m_timer->Delta, geom::Point(m_lastPoint.X, m_lastPoint.Y));
+
+	m_renderer->BeginDraw();
+	game->Render(m_renderer);
+	m_renderer->EndDraw();
+	m_renderer->Present();
 }
 
 void DirectXPage::CycleColorPrevious(Platform::Object^ sender, RoutedEventArgs^ args)
