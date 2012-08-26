@@ -8,7 +8,6 @@ namespace game
 		Ball(void);
 
 		virtual void Step(float delta, geom::Point pointerPosition, geom::Size screenSize) override;
-		virtual void Collide(GameObject^ object) override;
 		virtual void Render(IMetronoidRenderer^ renderer) override;
 
 		virtual property GameObjectType Type
@@ -16,6 +15,14 @@ namespace game
 			GameObjectType get() override
 			{
 				return GameObjectType::Ball;
+			}
+		}
+
+		virtual property ShapeType Shape
+		{
+			ShapeType get() override
+			{
+				return ShapeType::Ellipse;
 			}
 		}
 	};

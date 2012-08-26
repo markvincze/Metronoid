@@ -15,13 +15,13 @@ public:
 	virtual void Render() override;
 	void Update(float timeTotal, float timeDelta);
 
-	void BeginDraw();
-
-	void EndDraw();
-
 	void OnManipulationUpdated(Windows::UI::Input::GestureRecognizer^ sender, Windows::UI::Input::ManipulationUpdatedEventArgs^ args);
 	void OnManipulationCompleted(Windows::UI::Input::GestureRecognizer^ sender, Windows::UI::Input::ManipulationCompletedEventArgs^ args);
 	void OnTapped(Windows::UI::Input::GestureRecognizer^ sender, Windows::UI::Input::TappedEventArgs^ args);
+
+	void BeginDraw();
+	virtual void Clear(Windows::UI::Color fillColor) override;
+	void EndDraw();
 
 #pragma region Primitive render functions
 	virtual void FillRectangle(geom::Rect destination, Windows::UI::Color fillColor) override;

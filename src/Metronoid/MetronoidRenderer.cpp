@@ -133,7 +133,13 @@ void MetronoidRenderer::BeginDraw()
 {
 	m_d2dContext->SetTransform(D2D1::Matrix3x2F::Identity());
 	m_d2dContext->BeginDraw();
-	m_d2dContext->Clear(D2D1::ColorF(sc_bgColors[m_bgColorIndex]));
+}
+
+void MetronoidRenderer::Clear(Windows::UI::Color fillColor)
+{
+	D2D1::ColorF color(fillColor.R, fillColor.G, fillColor.B, fillColor.A);
+
+	m_d2dContext->Clear(color);
 }
 
 void MetronoidRenderer::EndDraw()
@@ -206,10 +212,10 @@ void MetronoidRenderer::Render()
 void MetronoidRenderer::FillRectangle(geom::Rect destination, Windows::UI::Color fillColor)
 {
 	D2D1_COLOR_F color;
-	color.a = fillColor.A;
-	color.r = fillColor.R;
-	color.g = fillColor.G;
-	color.b = fillColor.B;
+	color.a = fillColor.A / 255.0;
+	color.r = fillColor.R / 255.0;
+	color.g = fillColor.G / 255.0;
+	color.b = fillColor.B / 255.0;
 	m_blackBrush->SetColor(color);
 
 	D2D1_RECT_F rect;
@@ -224,10 +230,10 @@ void MetronoidRenderer::FillRectangle(geom::Rect destination, Windows::UI::Color
 void MetronoidRenderer::FillEllipse(geom::Point point, float radiusX, float radiusY, Windows::UI::Color fillColor)
 {
 	D2D1_COLOR_F color;
-	color.a = fillColor.A;
-	color.r = fillColor.R;
-	color.g = fillColor.G;
-	color.b = fillColor.B;
+	color.a = fillColor.A / 255.0;
+	color.r = fillColor.R / 255.0;
+	color.g = fillColor.G / 255.0;
+	color.b = fillColor.B / 255.0;
 	m_blackBrush->SetColor(color);
 
 	D2D1_ELLIPSE ellipse;

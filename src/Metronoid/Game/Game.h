@@ -18,5 +18,6 @@ namespace game
 		Paddle^ paddle;
 		geom::Size screenSize;
 		Platform::Collections::Vector<Ball^>^ balls;
+		Windows::UI::Color backgroundColor;
 	};
 }

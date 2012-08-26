@@ -1,5 +1,6 @@
 #pragma once
 #include "GameObjectType.h"
+#include "ShapeType.h"
 #include "../Geometry/Point.h"
 #include "../Geometry/Vector.h"
 #include "../Geometry/Size.h"
@@ -12,9 +13,10 @@ namespace game
 		GameObject();
 
 		virtual void Step(float delta, geom::Point pointerPosition, geom::Size screenSize);
-		virtual void Collide(GameObject^ object) = 0;
+		virtual void Collide(GameObject^ object);
 		virtual void Render(IMetronoidRenderer^ renderer) = 0;
 		virtual property GameObjectType Type{ GameObjectType get() = 0;}
+		virtual property ShapeType Shape{ ShapeType get() = 0;}
 
 		property geom::Point Position;
 		property geom::Vector Velocity;
@@ -24,5 +26,6 @@ namespace game
 
 	protected:
 		property float LastCollision;
+		property Windows::UI::Color FillColor;
 	};
 }

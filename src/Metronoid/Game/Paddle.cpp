@@ -7,6 +7,15 @@ Paddle::Paddle() :
 	GameObject()
 {
 	Bounds = Size(20, 100);
+
+	Windows::UI::Color fillColor;
+
+	fillColor.A = 255;
+	fillColor.R = 0x01;
+	fillColor.G = 0x4C;
+	fillColor.B = 0x65;
+
+	FillColor = fillColor;
 }
 
 void Paddle::Step(float delta, geom::Point pointerPosition, geom::Size screenSize)
@@ -21,7 +30,7 @@ void Paddle::Render(IMetronoidRenderer^ renderer)
 {
 	geom::Rect destination(Position.X - Bounds.Width / 2, Position.Y - Bounds.Height / 2, Bounds.Width, Bounds.Height);
 
-	renderer->FillRectangle(destination, Windows::UI::Colors::Black);
+	renderer->FillRectangle(destination, FillColor);
 }
 
 void Paddle::Collide(GameObject^ object)

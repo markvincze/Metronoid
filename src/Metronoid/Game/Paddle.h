@@ -18,5 +18,13 @@ namespace game
 				return GameObjectType::Paddle;
 			}
 		}
+
+		virtual property ShapeType Shape
+		{
+			ShapeType get() override
+			{
+				return ShapeType::Rectangle;
+			}
+		}
 	};
 }
