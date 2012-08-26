@@ -54,6 +54,7 @@
     <ClInclude Include="Game\Paddle.h" />
     <ClInclude Include="Game\Game.h" />
     <ClInclude Include="Game\Ball.h" />
+    <ClInclude Include="Game\GameObjectType.h" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest" />

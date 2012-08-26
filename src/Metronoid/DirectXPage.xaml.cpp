@@ -26,7 +26,7 @@ using namespace Windows::Graphics::Display;
 DirectXPage::DirectXPage() :
 	m_renderNeeded(true),
 	m_lastPointValid(false),
-	game(ref new game::Game()),
+	game(ref new game::Game(geom::Size(Window::Current->CoreWindow->Bounds.Width, Window::Current->CoreWindow->Bounds.Height))),
 	x(0),
 	s(80)
 {

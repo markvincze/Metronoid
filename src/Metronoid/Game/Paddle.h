@@ -7,8 +7,16 @@ namespace game
 	internal:
 		Paddle();
 
-		virtual void Step(float delta, geom::Point pointerPosition) override;
+		virtual void Step(float delta, geom::Point pointerPosition, geom::Size screenSize) override;
 		virtual void Collide(GameObject^ object) override;
 		virtual void Render(IMetronoidRenderer^ renderer) override;
+
+		virtual property GameObjectType Type
+		{
+			GameObjectType get() override
+			{
+				return GameObjectType::Paddle;
+			}
+		}
 	};
 }

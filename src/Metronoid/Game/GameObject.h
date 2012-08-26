@@ -1,6 +1,8 @@
 #pragma once
+#include "GameObjectType.h"
 #include "../Geometry/Point.h"
 #include "../Geometry/Vector.h"
+#include "../Geometry/Size.h"
 #include "../Interfaces/IMetronoidRenderer.h"
 namespace game
 {
@@ -9,47 +11,18 @@ namespace game
 	internal:
 		GameObject();
 
-		virtual void Step(float delta, geom::Point pointerPosition);
+		virtual void Step(float delta, geom::Point pointerPosition, geom::Size screenSize);
 		virtual void Collide(GameObject^ object) = 0;
 		virtual void Render(IMetronoidRenderer^ renderer) = 0;
+		virtual property GameObjectType Type{ GameObjectType get() = 0;}
 
 		property geom::Point Position;
 		property geom::Vector Velocity;
 		property geom::Vector Acceleration;
-//#pragma region properties
-//		geom::Point Position() const
-//		{
-//			return position;
-//		}
-//
-//		void Position(geom::Point val)
-//		{
-//			position = val;
-//		}
-//
-//		geom::Vector Velocity() const
-//		{
-//			return velocity;
-//		}
-//
-//		void Velocity(geom::Vector val)
-//		{
-//			velocity = val;
-//		}
-//
-//		geom::Vector Acceleration() const
-//		{
-//			return acceleration;
-//		}
-//
-//		void Acceleration(geom::Vector val)
-//		{
-//			acceleration = val;
-//		}
-//#pragma endregion
-//	protected:
-//		geom::Point position;
-//		geom::Vector velocity;
-//		geom::Vector acceleration;
+
+		property geom::Size Bounds;
+
+	protected:
+		property float LastCollision;
 	};
 }

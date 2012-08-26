@@ -213,8 +213,8 @@ void MetronoidRenderer::FillRectangle(geom::Rect destination, Windows::UI::Color
 	m_blackBrush->SetColor(color);
 
 	D2D1_RECT_F rect;
-	rect.left = destination.Position.X;// >= 0 ? destination.Position.X : 0;
-	rect.top = destination.Position.Y;// >= 0 ? destination.Position.Y : 0;
+	rect.left = destination.Position.X;
+	rect.top = destination.Position.Y;
 	rect.right = destination.Position.X + destination.Size.Width;
 	rect.bottom = destination.Position.Y + destination.Size.Height;
 
