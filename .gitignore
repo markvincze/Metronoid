@@ -26,6 +26,7 @@
 *_p.c
 *.ncb
 *.suo
+*.v11.suo
 *.tlb
 *.tlh
 *.bak
@@ -37,12 +38,17 @@
 *.sdf
 *.opensdf
 *.unsuccessfulbuild
+*.ipch
 ipch/
 obj/
 [Bb]in
 [Dd]ebug*/
 [Rr]elease*/
 Ankh.NoLoad
+
+#Generated
+*.g.h
+*.g.hpp
 
 #MonoDevelop
 *.pidb

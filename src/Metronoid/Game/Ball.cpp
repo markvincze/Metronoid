@@ -9,7 +9,9 @@ using namespace geom;
 Ball::Ball(void) :
 	GameObject()
 {
-	Bounds = Size(10, 10);
+	Bounds = Size(20, 20);
+
+	MaxSpeed = 500;
 
 	Windows::UI::Color fillColor;
 
@@ -23,26 +25,25 @@ Ball::Ball(void) :
 
 void Ball::Step(float delta, geom::Point pointerPosition, geom::Size screenSize)
 {
-	LastCollision += delta;
-	if(LastCollision > 0.05)
+	if(Position.Y <= Bounds.Height / 2 && Velocity.Y < 0 || Position.Y >= screenSize.Height - Bounds.Height / 2 && Velocity.Y > 0)
 	{
-		if(Position.Y <= Bounds.Height / 2 || Position.Y >= screenSize.Height - Bounds.Height / 2)
-		{
-			LastCollision = 0.0;
-			Velocity = geom::Vector(Velocity.X, Velocity.Y * -1);
-		}
+		Velocity = geom::Vector(Velocity.X, Velocity.Y * -1);
+	}
 
-		if(Position.X >= screenSize.Width - Bounds.Width / 2)
-		{
-			LastCollision = 0.0;
-			Velocity = geom::Vector(Velocity.X * -1, Velocity.Y);
-		}
+	if(/*Position.X <= Bounds.Width / 2 && Velocity.X < 0 || */Position.X >= screenSize.Width - Bounds.Width / 2 && Velocity.X > 0)
+	{
+		Velocity = geom::Vector(Velocity.X * -1, Velocity.Y);
 	}
 
 	GameObject::Step(delta, pointerPosition, screenSize);
+
+	if(Velocity.Length > MaxSpeed)
+	{
+		Velocity *= (MaxSpeed / Velocity.Length);
+	}
 }
 
 void Ball::Render(IMetronoidRenderer^ renderer)
 {
-	renderer->FillEllipse(Position, Bounds.Width, Bounds.Height, FillColor);
+	renderer->FillEllipse(Position, Bounds.Width / 2, Bounds.Height / 2, FillColor);
 }

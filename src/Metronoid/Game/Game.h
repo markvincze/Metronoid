@@ -3,6 +3,7 @@
 #include "../Geometry/Point.h"
 #include "../Geometry/Size.h"
 #include "Ball.h"
+#include "Brick.h"
 #include "Paddle.h"
 namespace game
 {
@@ -18,6 +19,7 @@ namespace game
 		Paddle^ paddle;
 		geom::Size screenSize;
 		Platform::Collections::Vector<Ball^>^ balls;
+		Platform::Collections::Vector<Brick^>^ bricks;
 		Windows::UI::Color backgroundColor;
 	};
 }

@@ -13,7 +13,8 @@ namespace game
 		GameObject();
 
 		virtual void Step(float delta, geom::Point pointerPosition, geom::Size screenSize);
-		virtual void Collide(GameObject^ object);
+		virtual bool CheckCollision(GameObject^ object);
+		virtual void ApplyCollisionEffect(GameObject^ object);
 		virtual void Render(IMetronoidRenderer^ renderer) = 0;
 		virtual property GameObjectType Type{ GameObjectType get() = 0;}
 		virtual property ShapeType Shape{ ShapeType get() = 0;}
@@ -23,9 +24,10 @@ namespace game
 		property geom::Vector Acceleration;
 
 		property geom::Size Bounds;
+		property Windows::UI::Color FillColor;
+		property float MaxSpeed;
 
 	protected:
 		property float LastCollision;
-		property Windows::UI::Color FillColor;
 	};
 }

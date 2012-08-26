@@ -12,6 +12,7 @@ namespace Windows {
     namespace UI {
         namespace Xaml {
             namespace Controls {
+                ref class TextBlock;
                 ref class StackPanel;
                 ref class Button;
             }
@@ -31,6 +32,7 @@ namespace Metronoid
     private:
         bool _contentLoaded;
     
+        private: Windows::UI::Xaml::Controls::TextBlock^ txtFps;
         private: Windows::UI::Xaml::Controls::StackPanel^ LeftPanel;
         private: Windows::UI::Xaml::Controls::StackPanel^ RightPanel;
         private: Windows::UI::Xaml::Controls::Button^ Next;

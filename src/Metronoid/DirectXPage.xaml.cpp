@@ -99,6 +99,7 @@ void DirectXPage::OnRendering(Platform::Object^ sender, Platform::Object^ args)
 {
 	m_timer->Update();
 
+	txtFps->Text = (1 / m_timer->Delta).ToString();
 	game->Step(m_timer->Delta, geom::Point(m_lastPoint.X, m_lastPoint.Y));
 
 	m_renderer->BeginDraw();

@@ -14,31 +14,68 @@ void GameObject::Step(float delta, geom::Point pointerPosition, geom::Size scree
 	this->Position += this->Velocity * delta;
 }
 
-void GameObject::Collide(GameObject^ object)
+bool GameObject::CheckCollision(GameObject^ object)
 {
-	if(LastCollision > 0.05)
+	if(Shape == ShapeType::Ellipse)
 	{
 		if(object->Shape == ShapeType::Rectangle)
 		{
-			if(this->Position.X >= object->Position.X - object->Bounds.Width / 2 - this->Bounds.Width / 2 &&
-			   this->Position.X <= object->Position.X + object->Bounds.Width / 2 + this->Bounds.Width / 2 &&
-			   this->Position.Y >= object->Position.Y - object->Bounds.Height / 2 - this->Bounds.Height / 2 &&
-			   this->Position.Y <= object->Position.Y + object->Bounds.Height / 2 + this->Bounds.Height / 2)
-			{
-				LastCollision = 0.0;
-				Vector newVelocity(Velocity.X * -1 + object->Velocity.X, Velocity.Y + object->Velocity.Y);
-				float xDif = (std::min)(abs(this->Position.X - (object->Position.X - object->Bounds.Width / 2)), abs(this->Position.X - (object->Position.X + object->Bounds.Width / 2)));
-				float yDif = (std::min)(abs(this->Position.Y - (object->Position.Y - object->Bounds.Height / 2)), abs(this->Position.Y - (object->Position.Y + object->Bounds.Height / 2)));
+			float circleDistanceX = abs(Position.X - object->Position.X);
+			float circleDistanceY = abs(Position.Y - object->Position.Y);
 
-				if(xDif < yDif)
-				{
-					Velocity = Vector(Velocity.X * -1 + object->Velocity.X, Velocity.Y + object->Velocity.Y);
-				}
-				else
-				{
-					Velocity = Vector(Velocity.X + object->Velocity.X, Velocity.Y * -1 + object->Velocity.Y);;
-				}
+			float objectBoundsWidthHalf = object->Bounds.Width / 2;
+			float objectBoundsHeightHalf = object->Bounds.Height / 2;
+			float boundsWidthHalf = this->Bounds.Width / 2;
+			float boundsHeightHalf = this->Bounds.Height / 2;
+
+			if (circleDistanceX > (objectBoundsWidthHalf + boundsWidthHalf) ||
+				(circleDistanceY > (objectBoundsHeightHalf + boundsHeightHalf)))
+			{
+				return false;
 			}
+
+			Vector towards = object->Position - this->Position;
+			float cosAngle = towards.Normalized() * this->Velocity.Normalized();
+			if(cosAngle < 0)
+			{
+				return false;
+			}
+
+			if (circleDistanceX <= (objectBoundsWidthHalf))
+			{
+				Velocity = Vector(Velocity.X + object->Velocity.X * 0.2, Velocity.Y * -1 + object->Velocity.Y * 0.2);
+
+				return true;
+			}
+
+			if (circleDistanceY <= (objectBoundsHeightHalf))
+			{
+				Velocity = Vector(Velocity.X * -1 + object->Velocity.X * 0.2, Velocity.Y + object->Velocity.Y * 0.2);
+				return true;
+			}
+
+			float cornerDistanceSq = pow(circleDistanceX - objectBoundsWidthHalf, 2) +
+				pow(circleDistanceY - objectBoundsHeightHalf, 2);
+
+			if(cornerDistanceSq <= pow(boundsWidthHalf, 2))
+			{
+				Vector temp = Position - object->Position;
+				Vector normal = (Position - Point(
+					object->Position.X + sgn(temp.X) * objectBoundsWidthHalf,
+					object->Position.Y + sgn(temp.Y) * objectBoundsHeightHalf)).Normalized();
+				
+				Velocity = Velocity - (normal * (2 * (Velocity * normal)));
+
+				return true;
+			}
+
+			return false;
 		}
 	}
+
+	return false;
+}
+
+void GameObject::ApplyCollisionEffect(GameObject^ object)
+{
 }

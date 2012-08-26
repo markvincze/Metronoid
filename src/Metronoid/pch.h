@@ -7,3 +7,4 @@
 #include <dwrite_1.h>
 #include <wincodec.h>
 #include "App.xaml.h"
+#include "core.h"

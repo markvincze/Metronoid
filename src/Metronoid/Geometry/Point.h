@@ -18,14 +18,14 @@ namespace geom
 			return Vector(to.X - X, to.Y - Y);
 		}
 
-		Point operator+(const Point& other)
+		/*Point operator+(const Point& other)
 		{
 			return Point(X + other.X, Y + other.Y);
-		}
+		}*/
 
-		Point operator-(const Point& other)
+		Vector operator-(const Point& other)
 		{
-			return Point(X - other.X, Y - other.Y);
+			return Vector(X - other.X, Y - other.Y);
 		}
 
 		Point operator+(const Vector& v)

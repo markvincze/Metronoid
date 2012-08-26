@@ -32,7 +32,3 @@ void Paddle::Render(IMetronoidRenderer^ renderer)
 
 	renderer->FillRectangle(destination, FillColor);
 }
-
-void Paddle::Collide(GameObject^ object)
-{
-}
