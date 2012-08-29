@@ -29,5 +29,7 @@ namespace game
 
 	protected:
 		property float LastCollision;
+		property GameObject^ LastCollidedWith;
+		property bool JustCollided;
 	};
 }

@@ -18,14 +18,14 @@ Game::Game(Size screenSize) :
 
 	Ball^ ball = ref new Ball();
 	ball->Position = Point(screenSize.Width -600, screenSize.Height - 80);
-	ball->Velocity = Vector(400, -10);
+	ball->Velocity = Vector(400, 150);
 	balls->Append(ball);
 
-	/*for (int i = 0; i < 1; i++)
+	/*for (int i = 0; i < 10; i++)
 	{
 		Ball^ ball = ref new Ball();
-		ball->Position = Point(screenSize.Width -600 + i, screenSize.Height - 80);
-		ball->Velocity = Vector(60, -450);
+		ball->Position = Point(screenSize.Width -600 + 50 * i, screenSize.Height - 80);
+		ball->Velocity = Vector(60, -450 - 10 * i);
 		balls->Append(ball);
 	}*/
 

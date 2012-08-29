@@ -6,6 +6,7 @@ using namespace geom;
 GameObject::GameObject()
 {
 	LastCollision = 0;
+	JustCollided = false;
 }
 
 void GameObject::Step(float delta, geom::Point pointerPosition, geom::Size screenSize)
@@ -31,44 +32,68 @@ bool GameObject::CheckCollision(GameObject^ object)
 			if (circleDistanceX > (objectBoundsWidthHalf + boundsWidthHalf) ||
 				(circleDistanceY > (objectBoundsHeightHalf + boundsHeightHalf)))
 			{
+				if(LastCollidedWith == object)
+					JustCollided = false;
+
 				return false;
 			}
 
-			Vector towards = object->Position - this->Position;
+			/*Vector towards = object->Position - this->Position;
 			float cosAngle = towards.Normalized() * this->Velocity.Normalized();
-			if(cosAngle < 0)
+			if(cosAngle < -0.4)
 			{
+				if(LastCollidedWith == object)
+					JustCollided = false;
 				return false;
-			}
+			}*/
 
-			if (circleDistanceX <= (objectBoundsWidthHalf))
+			if(!JustCollided)
 			{
-				Velocity = Vector(Velocity.X + object->Velocity.X * 0.2, Velocity.Y * -1 + object->Velocity.Y * 0.2);
+				if (circleDistanceX <= (objectBoundsWidthHalf))
+				{
+					Velocity = Vector(Velocity.X + object->Velocity.X * 0.2, Velocity.Y * -1 + object->Velocity.Y * 0.2);
+					if(object->Type == GameObjectType::Paddle)
+					{
+						LastCollidedWith = object;
+						JustCollided = true;
+					}
+					return true;
+				}
 
-				return true;
+				if (circleDistanceY <= (objectBoundsHeightHalf))
+				{
+					Velocity = Vector(Velocity.X * -1 + object->Velocity.X * 0.2, Velocity.Y + object->Velocity.Y * 0.2);
+					if(object->Type == GameObjectType::Paddle)
+					{
+						LastCollidedWith = object;
+						JustCollided = true;
+					}
+					return true;
+				}
+
+				float cornerDistanceSq = pow(circleDistanceX - objectBoundsWidthHalf, 2) +
+					pow(circleDistanceY - objectBoundsHeightHalf, 2);
+
+				if(cornerDistanceSq <= pow(boundsWidthHalf, 2))
+				{
+					Vector temp = Position - object->Position;
+					Vector normal = (Position - Point(
+						object->Position.X + sgn(temp.X) * objectBoundsWidthHalf,
+						object->Position.Y + sgn(temp.Y) * objectBoundsHeightHalf)).Normalized();
+
+					Velocity = Velocity - (normal * (2 * (Velocity * normal)));
+
+					if(object->Type == GameObjectType::Paddle)
+					{
+						LastCollidedWith = object;
+						JustCollided = true;
+					}
+					return true;
+				}
 			}
 
-			if (circleDistanceY <= (objectBoundsHeightHalf))
-			{
-				Velocity = Vector(Velocity.X * -1 + object->Velocity.X * 0.2, Velocity.Y + object->Velocity.Y * 0.2);
-				return true;
-			}
-
-			float cornerDistanceSq = pow(circleDistanceX - objectBoundsWidthHalf, 2) +
-				pow(circleDistanceY - objectBoundsHeightHalf, 2);
-
-			if(cornerDistanceSq <= pow(boundsWidthHalf, 2))
-			{
-				Vector temp = Position - object->Position;
-				Vector normal = (Position - Point(
-					object->Position.X + sgn(temp.X) * objectBoundsWidthHalf,
-					object->Position.Y + sgn(temp.Y) * objectBoundsHeightHalf)).Normalized();
-				
-				Velocity = Velocity - (normal * (2 * (Velocity * normal)));
-
-				return true;
-			}
-
+			if(LastCollidedWith == object)
+				JustCollided = false;
 			return false;
 		}
 	}
