@@ -6,7 +6,7 @@ using namespace geom;
 Paddle::Paddle() :
 	GameObject()
 {
-	Bounds = Size(20, 100);
+	Bounds = Size(100, 20);
 
 	Windows::UI::Color fillColor;
 
@@ -21,7 +21,7 @@ Paddle::Paddle() :
 void Paddle::Step(float delta, geom::Point pointerPosition, geom::Size screenSize)
 {
 	this->Velocity = this->Position.VectorTo(pointerPosition) * 7;
-	this->Velocity = geom::Vector(0, Velocity.Y);
+	this->Velocity = geom::Vector(Velocity.X, 0);
 
 	this->Position += this->Velocity * delta;
 }

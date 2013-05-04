@@ -49,6 +49,8 @@ DirectXPage::DirectXPage() :
 	m_eventToken = CompositionTarget::Rendering::add(ref new EventHandler<Object^>(this, &DirectXPage::OnRendering));
 
 	m_timer = ref new BasicTimer();
+
+	m_lastPoint = Window::Current->CoreWindow->PointerPosition;
 }
 
 DirectXPage::~DirectXPage()

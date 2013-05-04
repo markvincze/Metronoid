@@ -22,7 +22,9 @@ namespace game
 		void Tapped(geom::Point position);
 		
 	private:
-		void StepBalls(float delta);
+		void StepBalls(float delta, geom::Point pointerPosition);
+
+		void ResetBalls();
 
 		Paddle^ paddle;
 

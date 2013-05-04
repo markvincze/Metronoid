@@ -13,18 +13,15 @@ Game::Game(Size screenSize) :
 	state(GameState::Starting),
 	lives(3)
 {
-	paddle->Position = Point(50, screenSize.Height / 2);
+	paddle->Position = Point(screenSize.Width / 2, screenSize.Height - 50);
 
 	backgroundColor.A = 255;
 	backgroundColor.R = 255;
 	backgroundColor.G = 255;
 	backgroundColor.B = 255;
 
-	Ball^ ball = ref new Ball();
-	//ball->Position = Point(screenSize.Width -600, screenSize.Height - 80);
-	ball->Position = Point(100, 300);
-	ball->Velocity = Vector(0, 0);
-	balls->Append(ball);
+	ResetBalls();
+	
 
 	/*for (int i = 0; i < 10; i++)
 	{
@@ -54,12 +51,12 @@ Game::Game(Size screenSize) :
 
 	bricks->Append(brick);*/
 
-	for (int i = 0; i < 6; i++)
+	for (int i = 0; i < 12; i++)
 	{
-		for (int j = 0; j < 6; j++)
+		for (int j = 0; j < 5; j++)
 		{
 			Brick^ brick = ref new Brick();
-			brick->Position = Point(400 + i * 100, 100 + j * 100);
+			brick->Position = Point(100 + i * 100, 100 + j * 100);
 			brick->Bounds = Size(60, 60);
 			brick->Velocity = Vector(0, 0);
 
@@ -79,18 +76,38 @@ void Game::Step(float delta, Point pointerPosition)
 {
 	if(state == GameState::Running)
 	{
-		StepBalls(delta);
+		StepBalls(delta, pointerPosition);
+
+		// Ellenõrizzük, hogy meghaltunk-e.
+		bool died = true;
+		for each (Ball^ ball in balls)
+		{
+			if(ball->Position.Y < screenSize.Height + ball->Bounds.Height / 2)
+			{
+				died = false;
+				break;
+			}
+		}
+
+		if(died)
+		{
+			ResetBalls();
+
+			state = GameState::Starting;
+
+			lives--;
+		}
 	}
 	else if(state == GameState::Starting)
 	{
 		auto firstBall = balls->First()->Current;
-		firstBall->Position = Point(paddle->Position.X + paddle->Bounds.Width / 2 + firstBall->Bounds.Width / 2 + 5, paddle->Position.Y);
+		firstBall->Position = Point(paddle->Position.X, paddle->Position.Y - paddle->Bounds.Height / 2 - firstBall->Bounds.Width / 2 - 5);
 	}
 
 	paddle->Step(delta, pointerPosition, screenSize);
 }
 
-void Game::StepBalls(float delta)
+void Game::StepBalls(float delta, Point pointerPosition)
 {
 	for each(Ball^ ball in balls)
 	{
@@ -109,6 +126,15 @@ void Game::StepBalls(float delta)
 
 		ball->Step(delta, pointerPosition, screenSize);
 	}
+}
+
+void Game::ResetBalls()
+{
+	balls->Clear();
+
+	Ball^ ball = ref new Ball();
+	ball->Position = Point(paddle->Position.X, paddle->Position.Y - paddle->Bounds.Height / 2 - ball->Bounds.Width / 2 - 5);
+	balls->Append(ball);
 }
 
 void Game::Render(IMetronoidRenderer^ renderer)
@@ -151,9 +177,9 @@ void Game::Tapped(geom::Point position)
 	{
 		// Véletlenszerû irányban indul a labda, 200 sebességgel.
 		auto firstBall = balls->First()->Current;
-		int velY = rand() % 100;
-		double velX = sqrt(40000 - velY * velY);
-		firstBall->Velocity = Vector(velX, velY);
+		int velX = (rand() % 100) - 50;
+		double velY = sqrt(50000 - velX * velX);
+		firstBall->Velocity = Vector(velX, -velY);
 
 		state = GameState::Running;
 	}

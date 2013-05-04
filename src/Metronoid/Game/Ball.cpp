@@ -25,12 +25,14 @@ Ball::Ball(void) :
 
 void Ball::Step(float delta, geom::Point pointerPosition, geom::Size screenSize)
 {
-	if(Position.Y <= Bounds.Height / 2 && Velocity.Y < 0 || Position.Y >= screenSize.Height - Bounds.Height / 2 && Velocity.Y > 0)
+	// Képernyõ tetejébe ütközés.
+	if(Position.Y <= Bounds.Height / 2 && Velocity.Y < 0)
 	{
 		Velocity = geom::Vector(Velocity.X, Velocity.Y * -1);
 	}
 
-	if(Position.X >= screenSize.Width - Bounds.Width / 2 && Velocity.X > 0)
+	// Képernyõ oldalába ütközés.
+	if(Position.X <= Bounds.Width / 2 && Velocity.X < 0 || Position.X >= screenSize.Width - Bounds.Width / 2 && Velocity.X > 0)
 	{
 		Velocity = geom::Vector(Velocity.X * -1, Velocity.Y);
 	}
@@ -50,13 +52,13 @@ bool Ball::CheckCollision(GameObject^ object)
 	if(result && object->Type == GameObjectType::Paddle)
 	{
 		// Ha az ütõvel ütközik, akkor módosítjuk az irányát, ha sikerült visszaütni.
-		if(Velocity.X > 0)
+		if(Velocity.Y < 0)
 		{
 			auto length = Velocity.Length;
-			auto distanceFromPaddleCenter = Position.Y - object->Position.Y;
-			auto ratio = distanceFromPaddleCenter / object->Bounds.Height;
+			auto distanceFromPaddleCenter = Position.X - object->Position.X;
+			auto ratio = distanceFromPaddleCenter / object->Bounds.Width;
 
-			Vector temp(1 - abs(ratio), ratio);
+			Vector temp(ratio, -(1 - abs(ratio)));
 			temp = temp.Normalized();
 			Velocity = temp * length;
 		}

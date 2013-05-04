@@ -86,10 +86,10 @@ bool GameObject::CheckCollision(GameObject^ object)
 					// HACK: A labda ne mehessen nagyon éles szögben felfelé vagy lefelé.
 					if(Type == GameObjectType::Ball)
 					{
-						if(abs(Velocity.X) < abs(Velocity.Y))
+						if(abs(Velocity.Y) < abs(Velocity.X))
 						{
 							auto multiplier = Velocity.Length / sqrt(2);
-							Velocity = Vector(sgn(Velocity.X) * multiplier, sgn(Velocity.Y) * multiplier);
+							Velocity = Vector(sgn(Velocity.Y) * multiplier, sgn(Velocity.X) * multiplier);
 						}
 					}
 
