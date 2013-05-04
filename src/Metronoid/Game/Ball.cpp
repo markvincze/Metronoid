@@ -30,7 +30,7 @@ void Ball::Step(float delta, geom::Point pointerPosition, geom::Size screenSize)
 		Velocity = geom::Vector(Velocity.X, Velocity.Y * -1);
 	}
 
-	if(/*Position.X <= Bounds.Width / 2 && Velocity.X < 0 || */Position.X >= screenSize.Width - Bounds.Width / 2 && Velocity.X > 0)
+	if(Position.X >= screenSize.Width - Bounds.Width / 2 && Velocity.X > 0)
 	{
 		Velocity = geom::Vector(Velocity.X * -1, Velocity.Y);
 	}
@@ -41,6 +41,28 @@ void Ball::Step(float delta, geom::Point pointerPosition, geom::Size screenSize)
 	{
 		Velocity *= (MaxSpeed / Velocity.Length);
 	}
+}
+
+bool Ball::CheckCollision(GameObject^ object)
+{
+	bool result = GameObject::CheckCollision(object);
+
+	if(result && object->Type == GameObjectType::Paddle)
+	{
+		// Ha az ütõvel ütközik, akkor módosítjuk az irányát, ha sikerült visszaütni.
+		if(Velocity.X > 0)
+		{
+			auto length = Velocity.Length;
+			auto distanceFromPaddleCenter = Position.Y - object->Position.Y;
+			auto ratio = distanceFromPaddleCenter / object->Bounds.Height;
+
+			Vector temp(1 - abs(ratio), ratio);
+			temp = temp.Normalized();
+			Velocity = temp * length;
+		}
+	}
+
+	return result;
 }
 
 void Ball::Render(IMetronoidRenderer^ renderer)

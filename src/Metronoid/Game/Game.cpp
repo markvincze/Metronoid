@@ -1,5 +1,7 @@
 #include "pch.h"
 #include "Game.h"
+#include <cstdlib>
+
 using namespace game;
 using namespace geom;
 
@@ -7,7 +9,9 @@ Game::Game(Size screenSize) :
 	paddle(ref new Paddle()),
 	screenSize(screenSize),
 	balls(ref new Platform::Collections::Vector<Ball^>()),
-	bricks(ref new Platform::Collections::Vector<Brick^>())
+	bricks(ref new Platform::Collections::Vector<Brick^>()),
+	state(GameState::Starting),
+	lives(3)
 {
 	paddle->Position = Point(50, screenSize.Height / 2);
 
@@ -17,16 +21,17 @@ Game::Game(Size screenSize) :
 	backgroundColor.B = 255;
 
 	Ball^ ball = ref new Ball();
-	ball->Position = Point(screenSize.Width -600, screenSize.Height - 80);
-	ball->Velocity = Vector(400, 150);
+	//ball->Position = Point(screenSize.Width -600, screenSize.Height - 80);
+	ball->Position = Point(100, 300);
+	ball->Velocity = Vector(0, 0);
 	balls->Append(ball);
 
 	/*for (int i = 0; i < 10; i++)
 	{
-		Ball^ ball = ref new Ball();
-		ball->Position = Point(screenSize.Width -600 + 50 * i, screenSize.Height - 80);
-		ball->Velocity = Vector(60, -450 - 10 * i);
-		balls->Append(ball);
+	Ball^ ball = ref new Ball();
+	ball->Position = Point(screenSize.Width -600 + 50 * i, screenSize.Height - 80);
+	ball->Velocity = Vector(60, -450 - 10 * i);
+	balls->Append(ball);
 	}*/
 
 	/*Ball^ ball = ref new Ball();
@@ -72,6 +77,21 @@ Game::Game(Size screenSize) :
 
 void Game::Step(float delta, Point pointerPosition)
 {
+	if(state == GameState::Running)
+	{
+		StepBalls(delta);
+	}
+	else if(state == GameState::Starting)
+	{
+		auto firstBall = balls->First()->Current;
+		firstBall->Position = Point(paddle->Position.X + paddle->Bounds.Width / 2 + firstBall->Bounds.Width / 2 + 5, paddle->Position.Y);
+	}
+
+	paddle->Step(delta, pointerPosition, screenSize);
+}
+
+void Game::StepBalls(float delta)
+{
 	for each(Ball^ ball in balls)
 	{
 		ball->CheckCollision(paddle);
@@ -89,8 +109,6 @@ void Game::Step(float delta, Point pointerPosition)
 
 		ball->Step(delta, pointerPosition, screenSize);
 	}
-
-	paddle->Step(delta, pointerPosition, screenSize);
 }
 
 void Game::Render(IMetronoidRenderer^ renderer)
@@ -107,5 +125,36 @@ void Game::Render(IMetronoidRenderer^ renderer)
 	for each(Ball^ ball in balls)
 	{
 		ball->Render(renderer);
+	}
+
+	auto firstBall = balls->First()->Current;
+
+	renderer->DrawText(
+		L"Ball velocity: " + firstBall->Velocity.X + L", " + firstBall->Velocity.Y +
+		L" Length: " + firstBall->Velocity.Length,
+		14,
+		10,
+		30,
+		Windows::UI::Colors::Black);
+
+	renderer->DrawText(
+		L"Lives: " + lives,
+		14,
+		10,
+		50,
+		Windows::UI::Colors::Black);
+}
+
+void Game::Tapped(geom::Point position)
+{
+	if(state == GameState::Starting)
+	{
+		// Véletlenszerû irányban indul a labda, 200 sebességgel.
+		auto firstBall = balls->First()->Current;
+		int velY = rand() % 100;
+		double velX = sqrt(40000 - velY * velY);
+		firstBall->Velocity = Vector(velX, velY);
+
+		state = GameState::Running;
 	}
 }

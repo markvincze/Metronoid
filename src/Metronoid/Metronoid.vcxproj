@@ -111,6 +111,7 @@
     <ClInclude Include="Game\Game.h" />
     <ClInclude Include="Game\GameObject.h" />
     <ClInclude Include="Game\GameObjectType.h" />
+    <ClInclude Include="Game\GameState.h" />
     <ClInclude Include="Game\Paddle.h" />
     <ClInclude Include=".\Game\ShapeType.h" />
     <ClInclude Include="Geometry\Point.h" />

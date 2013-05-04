@@ -58,24 +58,8 @@ DirectXPage::~DirectXPage()
 void DirectXPage::OnPointerMoved(Platform::Object^ sender, Windows::UI::Xaml::Input::PointerRoutedEventArgs^ args)
 {
 	auto currentPoint = args->GetCurrentPoint(nullptr);
-	/*if (currentPoint->IsInContact)
-	{*/
-		/*if (m_lastPointValid)
-		{
-		Windows::Foundation::Point delta(
-		currentPoint->Position.X - m_lastPoint.X,
-		currentPoint->Position.Y - m_lastPoint.Y
-		);
-		m_renderer->UpdateView(delta);
-		m_renderNeeded = true;
-		}*/
-		m_lastPoint = currentPoint->Position;
-	/*	m_lastPointValid = true;
-	}
-	else
-	{
-		m_lastPointValid = false;
-	}*/
+
+	m_lastPoint = currentPoint->Position;
 }
 
 void DirectXPage::OnPointerReleased(Platform::Object^ sender, Windows::UI::Xaml::Input::PointerRoutedEventArgs^ args)
@@ -118,4 +102,11 @@ void DirectXPage::CycleColorNext(Platform::Object^ sender, RoutedEventArgs^ args
 {
 	m_renderer->BackgroundColorPrevious();
 	m_renderNeeded = true;
+}
+
+
+void DirectXPage::OnTapped(Platform::Object^ sender, Windows::UI::Xaml::Input::TappedRoutedEventArgs^ e)
+{
+	auto point = e->GetPosition(this);
+	game->Tapped(geom::Point(point.X, point.Y));
 }

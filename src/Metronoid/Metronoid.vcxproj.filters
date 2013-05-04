@@ -59,6 +59,7 @@
     <ClInclude Include=".\Game\ShapeType.h" />
     <ClInclude Include="Game\Brick.h" />
     <ClInclude Include=".\core.h" />
+    <ClInclude Include="Game\GameState.h" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest" />

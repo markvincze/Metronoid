@@ -8,7 +8,7 @@ ref class MetronoidRenderer sealed : public DirectXBase, public IMetronoidRender
 {
 public:
 	MetronoidRenderer();
-	~MetronoidRenderer();
+	virtual ~MetronoidRenderer();
 	virtual void CreateDeviceIndependentResources() override;
 	virtual void CreateDeviceResources() override;
 	virtual void CreateWindowSizeDependentResources() override;
@@ -26,6 +26,7 @@ public:
 #pragma region Primitive render functions
 	virtual void FillRectangle(geom::Rect destination, Windows::UI::Color fillColor) override;
 	virtual void FillEllipse(geom::Point point, float radiusX, float radiusY, Windows::UI::Color fillColor) override;
+	virtual void DrawText(Platform::String^ text, double fontSize, double x, double y, Windows::UI::Color color) override;
 #pragma endregion
 
 	void UpdateView(Windows::Foundation::Point deltaViewPosition);

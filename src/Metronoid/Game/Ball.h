@@ -9,6 +9,7 @@ namespace game
 
 		virtual void Step(float delta, geom::Point pointerPosition, geom::Size screenSize) override;
 		virtual void Render(IMetronoidRenderer^ renderer) override;
+		virtual bool CheckCollision(GameObject^ object) override;
 
 		virtual property GameObjectType Type
 		{

@@ -5,11 +5,15 @@ namespace game
 	ref class Brick : public GameObject
 	{
 	internal:
-		Brick(void);
+		Brick();
 		virtual void Render(IMetronoidRenderer^ renderer) override;
 		virtual void ApplyCollisionEffect(GameObject^ object) override;
 
 		property bool IsDead;
+
+		property int FullHealth;
+
+		property int Health;
 
 		virtual property GameObjectType Type
 		{

@@ -20,7 +20,7 @@ namespace Metronoid
 	{
 	public:
 		DirectXPage();
-		~DirectXPage();
+		virtual ~DirectXPage();
 
 		void CycleColorPrevious(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
 		void CycleColorNext(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
@@ -31,6 +31,7 @@ namespace Metronoid
 		void OnWindowSizeChanged(Windows::UI::Core::CoreWindow^ sender, Windows::UI::Core::WindowSizeChangedEventArgs^ args);
 		void OnLogicalDpiChanged(Platform::Object^ sender);
 		void OnRendering(Object^ sender, Object^ args);
+		void OnTapped(Platform::Object^ sender, Windows::UI::Xaml::Input::TappedRoutedEventArgs^ e);
 
 		Windows::Foundation::EventRegistrationToken m_eventToken;
 

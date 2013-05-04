@@ -49,6 +49,8 @@ Ankh.NoLoad
 #Generated
 *.g.h
 *.g.hpp
+*.g.cpp
+*.ipch
 
 #MonoDevelop
 *.pidb

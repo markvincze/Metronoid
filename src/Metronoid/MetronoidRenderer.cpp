@@ -244,6 +244,31 @@ void MetronoidRenderer::FillEllipse(geom::Point point, float radiusX, float radi
 
 	m_d2dContext->FillEllipse(ellipse, m_blackBrush.Get());
 }
+
+void MetronoidRenderer::DrawText(Platform::String^ text, double fontSize, double x, double y, Windows::UI::Color color)
+{
+	D2D1_RECT_F rect;
+	rect.top = y;
+	rect.left = x;
+	rect.right = m_windowBounds.Width - x;
+	rect.bottom = m_windowBounds.Height - y;
+
+	if(m_textFormat->GetFontSize() != fontSize)
+	{
+		m_dwriteFactory->CreateTextFormat(
+			L"Segoe UI",
+			nullptr,
+			DWRITE_FONT_WEIGHT_REGULAR,
+			DWRITE_FONT_STYLE_NORMAL,
+			DWRITE_FONT_STRETCH_NORMAL,
+			fontSize,
+			L"en-US",
+			&m_textFormat);
+	}
+
+	m_d2dContext->DrawText(text->Data(), text->Length(), m_textFormat.Get(), rect, m_blackBrush.Get()); 
+}
+
 #pragma endregion
 
 void MetronoidRenderer::UpdateView(Point deltaViewPosition)

@@ -33,19 +33,13 @@ bool GameObject::CheckCollision(GameObject^ object)
 				(circleDistanceY > (objectBoundsHeightHalf + boundsHeightHalf)))
 			{
 				if(LastCollidedWith == object)
+				{
+					// Eltávolodtunk az objektumtól, akivel legutóbb ütköztünk.
 					JustCollided = false;
+				}
 
 				return false;
 			}
-
-			/*Vector towards = object->Position - this->Position;
-			float cosAngle = towards.Normalized() * this->Velocity.Normalized();
-			if(cosAngle < -0.4)
-			{
-				if(LastCollidedWith == object)
-					JustCollided = false;
-				return false;
-			}*/
 
 			if(!JustCollided)
 			{
@@ -88,12 +82,27 @@ bool GameObject::CheckCollision(GameObject^ object)
 						LastCollidedWith = object;
 						JustCollided = true;
 					}
+
+					// HACK: A labda ne mehessen nagyon éles szögben felfelé vagy lefelé.
+					if(Type == GameObjectType::Ball)
+					{
+						if(abs(Velocity.X) < abs(Velocity.Y))
+						{
+							auto multiplier = Velocity.Length / sqrt(2);
+							Velocity = Vector(sgn(Velocity.X) * multiplier, sgn(Velocity.Y) * multiplier);
+						}
+					}
+
 					return true;
 				}
 			}
 
 			if(LastCollidedWith == object)
+			{
+				// Eltávolodtunk az objektumtól, akivel legutóbb ütköztünk.
 				JustCollided = false;
+			}
+
 			return false;
 		}
 	}

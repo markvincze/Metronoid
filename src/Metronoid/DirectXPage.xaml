@@ -6,7 +6,9 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    PointerMoved="OnPointerMoved" PointerReleased="OnPointerReleased">
+    PointerMoved="OnPointerMoved"
+    Tapped="OnTapped"
+    PointerReleased="OnPointerReleased">
     <TextBlock x:Name="txtFps" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5, 5, 0, 0" Foreground="Black" />
     <Page>
         <Page.BottomAppBar>

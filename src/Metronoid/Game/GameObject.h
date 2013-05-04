@@ -1,10 +1,12 @@
 #pragma once
+
 #include "GameObjectType.h"
 #include "ShapeType.h"
 #include "../Geometry/Point.h"
 #include "../Geometry/Vector.h"
 #include "../Geometry/Size.h"
 #include "../Interfaces/IMetronoidRenderer.h"
+
 namespace game
 {
 	ref class GameObject
